@@ -96,7 +96,7 @@ function proceedP2PMessage(socket: ws, p2pMessage: P2PMessage): void {
     const to: Client = ClientStorage.instance.getClient(uidTo);
     const uidFrom: string = from && from.uid || undefined;
 
-    if (!uidTo || !uidFrom) {
+    if (!uidTo || !uidFrom || !to) {
         return;
     }
 

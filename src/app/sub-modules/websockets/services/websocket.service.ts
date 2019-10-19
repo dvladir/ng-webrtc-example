@@ -36,7 +36,7 @@ export class WebsocketService implements OnDestroy {
           this._isConnected$.next(true);
 
           if (this._pingInterval) {
-            timer(this._pingInterval)
+            timer(this._pingInterval, this._pingInterval)
               .pipe(takeUntil(this._terminator$))
               .subscribe(() => this.send(EventTypes.ping));
           }
