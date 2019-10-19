@@ -1,11 +1,12 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {BehaviorSubject, interval, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, interval, Observable, Subject, timer} from 'rxjs';
 import {WebSocketSubject, WebSocketSubjectConfig} from 'rxjs/webSocket';
-import {distinctUntilChanged, filter, map, takeWhile} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map, takeUntil, takeWhile} from 'rxjs/operators';
 import {assert, MessagesService} from '../../core';
 import {WsMessage} from '../shared/ws-message';
 import {WebSocketConfig} from '../shared/web-socket-config';
-import {DEF_RECONNECT_ATTEMPTS, DEF_RECONNECT_INTERVAL, DEF_URL} from '../shared/constants';
+import {EventTypes} from '../shared/event-types.enum';
+import {DEF_PING_INTERVAL, DEF_RECONNECT_ATTEMPTS, DEF_RECONNECT_INTERVAL, DEF_URL} from '../shared/constants';
 
 @Injectable()
 export class WebsocketService implements OnDestroy {
@@ -17,6 +18,7 @@ export class WebsocketService implements OnDestroy {
   ) {
     this._reconnectInterval = wsConfig.reconnectInterval || DEF_RECONNECT_INTERVAL;
     this._reconnectAttempts = wsConfig.reconnectAttempts || DEF_RECONNECT_ATTEMPTS;
+    this._pingInterval = (!!wsConfig.pingInterval || wsConfig.pingInterval === 0) ? wsConfig.pingInterval : DEF_PING_INTERVAL;
     const url: string = wsConfig.url || defaultUrl;
 
     this._config = {
@@ -32,6 +34,13 @@ export class WebsocketService implements OnDestroy {
         next: (event: Event) => {
           this._notifications.success('Websocket connected!');
           this._isConnected$.next(true);
+
+          if (this._pingInterval) {
+            timer(this._pingInterval)
+              .pipe(takeUntil(this._terminator$))
+              .subscribe(() => this.send(EventTypes.ping));
+          }
+
         }
       }
     };
@@ -54,10 +63,12 @@ export class WebsocketService implements OnDestroy {
 
   private readonly _reconnectInterval: number;
   private readonly _reconnectAttempts: number;
+  private readonly _pingInterval: number;
   private readonly _config: WebSocketSubjectConfig<WsMessage<any>>;
   private _websocket$: WebSocketSubject<WsMessage<any>>;
   private _wsMessage$: Subject<WsMessage<any>> = new Subject<WsMessage<any>>();
   private _isConnected$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(undefined);
+  private _terminator$: Subject<any> = new Subject<any>();
   private _reconnection$: Observable<any>;
 
   private connect(): void {
@@ -95,6 +106,8 @@ export class WebsocketService implements OnDestroy {
     if (this._websocket$) {
       this._websocket$.complete();
     }
+    this._terminator$.next();
+    this._terminator$.complete();
   }
 
   on<T>(event: string): Observable<T> {

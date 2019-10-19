@@ -22,9 +22,14 @@ app.get('/login', (req, res) => returnIndex(res));
 app.get('/users', (req, res) => returnIndex(res));
 app.get('/chat', (req, res) => returnIndex(res));
 
+function getClientName(c: Client): string {
+  const {uid, name} = c;
+  return !!name ? `${name} (${uid})` : uid;
+}
+
 function registerClient(socket: ws, client: Client): void {
     const c: Client = ClientStorage.instance.register(socket, client);
-    console.log(`Client: ${c.uid} registered.`);
+    console.log(`Client: ${getClientName(c)} registered.`);
     sendCurrentClient(c);
     sendClientsListToAll();
 }
@@ -33,8 +38,15 @@ function unregisterClient(socket: ws): void {
     const client: Client = ClientStorage.instance.getClient(socket);
     if (client) {
         ClientStorage.instance.unregister(socket);
-        console.log(`Client: ${client.uid} unregistered.`);
+        console.log(`Client: ${getClientName(client)} unregistered.`);
     }
+}
+
+function ping(socket: ws) {
+  const client: Client = ClientStorage.instance.getClient(socket);
+  if (client) {
+    console.log(`Ping from: ${getClientName(client)}`);
+  }
 }
 
 function sendCurrentClient(client: Client): void {
@@ -134,6 +146,9 @@ appWs.app.ws('/endpoint', ws => {
                 break;
             case EventTypes.p2pMessage:
                 proceedP2PMessage(ws, wsMessage.data);
+                break;
+          case EventTypes.ping:
+                ping(ws);
                 break;
             default:
                 notify(msg);

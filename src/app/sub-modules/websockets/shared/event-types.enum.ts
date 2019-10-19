@@ -4,5 +4,6 @@ export enum EventTypes {
   currentClient = 'currentClient',
   allClients = 'allClients',
   changeClientName = 'changeClientName',
-  p2pMessage = 'p2pMessage'
+  p2pMessage = 'p2pMessage',
+  ping = 'PING'
 }
