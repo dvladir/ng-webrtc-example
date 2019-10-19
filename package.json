@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
-    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -12,9 +11,10 @@
     "front:clean": "rimraf dist/front",
     "back:build": "tsc -p ./tsconfig.server.json",
     "front:build": "ng build --prod=true",
+    "fron:build_dev": "ng build",
     "all:clean": "npm run back:clean && npm run front:clean",
     "all:build": "npm run back:build && npm run front:build",
-    "postinstall": "npm run all:clean && npm run all:build",
+    "build": "npm run all:clean && npm run all:build",
     "start": "node ./dist/back/app.js"
   },
   "private": true,
