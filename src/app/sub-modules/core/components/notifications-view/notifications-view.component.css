@@ -1,0 +1,73 @@
+:host {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  box-sizing: border-box;
+  margin: 0.1em;
+  width: calc(100% - 0.2em);
+}
+
+@media (min-width: 576px) {
+  :host {
+    width: 70%;
+  }
+}
+
+@media (min-width: 768px) {
+  :host {
+    width: 65%;
+  }
+}
+
+@media (min-width: 992px) {
+  :host {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1200px) {
+  :host {
+    width: 40%;
+  }
+}
+
+.alert {
+  padding: 1em;
+  margin-bottom: 0.2em;
+  border: 0.1em solid transparent;
+  border-radius: 0.2em;
+  display: flex;
+}
+
+.alert > div:first-child {
+  flex-grow: 1;
+}
+
+.alert > a {
+  color: inherit;
+}
+
+.alert.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+.alert.alert-info{
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+
+.alert.alert-warning{
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+
+.alert.alert-danger{
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}

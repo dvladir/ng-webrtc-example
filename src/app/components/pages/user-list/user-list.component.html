@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="item">
+    <article class="box">
+      <section>
+        <h1>
+          Welcome
+          <app-current-client></app-current-client>
+        </h1>
+        <div class="tools">
+          <fa name="sign-out" (click)="signOut()"></fa>
+        </div>
+      </section>
+      <section>
+          <label>Choose a user to start chat with:</label>
+          <hr/>
+          <app-clients-list (clientSelect)="onClientSelect($event)"></app-clients-list>
+      </section>
+    </article>
+  </div>
+</div>

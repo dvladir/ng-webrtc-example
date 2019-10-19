@@ -1,0 +1,9 @@
+.chat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+video {
+  min-width: 20em;
+  min-height: 20em;
+}

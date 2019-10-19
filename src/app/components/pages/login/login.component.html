@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="item">
+    <form [formGroup]="form" (ngSubmit)="changeName()">
+      <article class="box">
+        <section>
+          <h1>Welcome</h1>
+        </section>
+        <section>
+          <div class="form-group">
+            <section>
+              <label>Enter name:</label>
+              <input type="text" class="control" formControlName="name"/>
+            </section>
+            <section>
+              <button class="primary">Proceed</button>
+            </section>
+          </div>
+        </section>
+      </article>
+    </form>
+  </div>
+</div>

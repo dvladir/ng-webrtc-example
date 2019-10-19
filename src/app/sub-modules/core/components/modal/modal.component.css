@@ -1,0 +1,18 @@
+:host {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: transparent;
+}
+
+.box {
+  background: #fff;
+  min-width: 10em;
+  margin: 5em auto 0;
+  max-width: 60em;
+  box-shadow: none;
+}
+

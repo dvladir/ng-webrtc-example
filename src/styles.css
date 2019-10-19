@@ -1,0 +1,177 @@
+/* You can add global styles to this file, and also import other style files */
+
+body{
+  font-family: sans-serif;
+}
+
+.container {
+  margin: 1em;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin: -1em 0;
+}
+
+.column .item {
+  margin: 1em 0;
+}
+
+.row {
+  display: flex;
+  margin: 0 -1em;
+}
+
+.row .item {
+  margin: 0 -1em;
+}
+
+article.box {
+  border: solid 0.1em #aaa;
+  min-width: 10em;
+  box-shadow: #999 0.2em 0.2em 0.2em 0.1em;
+}
+
+article.box > section:nth-child(1) {
+  padding: 0.1em 0.5em;
+  border-bottom: solid 0.1em #bbb;
+}
+
+article.box > section:nth-child(1) > h1{
+  font-size: 1.2em;
+  margin: 0;
+  display: inline-block;
+}
+
+article.box > section:nth-child(1) > .tools {
+  float: right;
+  display: flex;
+  color: #888;
+  font-size: 1.2em;
+}
+article.box > section:nth-child(1) > .tools > fa {
+  margin: 0 0.2em;
+  cursor: pointer;
+}
+
+article.box > section:nth-child(1) > .tools > fa:hover,
+article.box > section:nth-child(1) > .tools > fa:focus {
+  color: #555;
+}
+
+article.box > section:nth-child(2) {
+  margin: 0.5em;
+  min-height: 6em;
+}
+
+article.box > section:nth-child(3) {
+  padding: 0.3em 0.5em 0.1em;
+  border-top: solid 0.1em #bbb;
+  text-align: right;
+  min-height: 2em;
+}
+
+button {
+  min-height: 1.9em;
+  background: #fff;
+  border: solid 1px #aaa;
+  border-radius: 0.2em;
+  font-size: 1em;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:not([disabled]):hover,
+button:not([disabled]):focus {
+  background: #ddd;
+}
+
+button.danger {
+  background: #b92323;
+  color: #fff;
+  border-color: #831616;
+}
+
+button.danger:not([disabled]):hover,
+button.danger:not([disabled]):focus{
+  background: #831616;
+}
+
+button.success {
+  background: #0b912a;
+  color: #fff;
+  border-color: #0b6e1f;
+}
+
+button.success:not([disabled]):hover,
+button.success:not([disabled]):focus {
+  background: #0b6e1f;
+}
+
+button.primary {
+  background: #1348ad;
+  color: #fff;
+  border-color: #113b8a;
+}
+
+button.primary:not([disabled]):hover,
+button.primary:not([disabled]):focus {
+  background: #113b8a;
+}
+
+div.btn-group {
+  margin: -0.2em -0.5em;
+}
+
+div.btn-group > button {
+  min-width: 5em;
+  margin: 0.2em 0.5em;
+}
+
+div.form-group {
+  display: flex;
+  flex-direction: column;
+  margin: -0.3em;
+}
+
+div.form-group > section {
+  display: flex;
+  flex-direction: column;
+  margin: 0.3em;
+}
+
+div.form-group > section > label {
+  margin-bottom: 0.1em;
+}
+
+div.form-group > section > label + .control{
+  min-height: 1.2em;
+  font-size: 1.2em;
+  border: solid 1px #bbb;
+  border-radius: 0.2em;
+  padding: 0.1em 0.3em;
+}
+
+div.form-group > section > label + .control:focus{
+  border-color: #1e6cff;
+  outline: none;
+}
+
+div.form-group > section > label + .control[disabled],
+div.form-group > section > label + .control.disabled {
+  background: #ddd;
+  cursor: not-allowed;
+}
+
+div.form-group > section > label + .control:not([disabled]).ng-invalid.ng-dirty,
+div.form-group > section > label + .control:not(.disabled).ng-invalid.ng-dirty {
+  border-color: #b92323;
+}
+
+.hidden {
+  display: none;
+}

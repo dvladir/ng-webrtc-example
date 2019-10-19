@@ -1,0 +1,4 @@
+<div *ngFor="let client of (clients$ | async); trackBy: trackByFn"
+  class="client-row" [class.no-name]="!client.name" (click)="onRowClick(client)">
+  {{client | clientName}}
+</div>

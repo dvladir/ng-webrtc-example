@@ -1,0 +1,14 @@
+<article class="box">
+  <section [class.hidden]="!title">
+    <h1>{{title}}</h1>
+    <div class="tools" *ngIf="useCloseBtn">
+      <fa name="times" (click)="onCloseClick()"></fa>
+    </div>
+  </section>
+  <section>
+    <ng-content select="app-modal-content"></ng-content>
+  </section>
+  <section #el [class.hidden]="el.childNodes.length === 0">
+    <ng-content select="app-modal-footer"></ng-content>
+  </section>
+</article>
