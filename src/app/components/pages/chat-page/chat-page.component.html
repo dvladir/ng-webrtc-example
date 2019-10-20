@@ -1,9 +1,5 @@
-<div class="row">
-  <div class="item">
-    <div class="chat-content">
-      <video autoplay controls #remote></video>
-      <video autoplay controls #local></video>
-      <button type="button" class="primary" (click)="stop()">Back</button>
-    </div>
-  </div>
+<div class="chat-content">
+  <video class="remote" autoplay controls #remote></video>
+  <video class="local"  autoplay controls #local></video>
+  <button type="button" class="primary" (click)="stop()">Back</button>
 </div>

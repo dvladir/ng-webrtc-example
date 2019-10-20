@@ -1,0 +1,7 @@
+app-modal::ng-deep .box {
+  max-width: 24em;
+}
+
+app-modal::ng-deep .box > section:nth-child(2){
+  min-height: 2em;
+}

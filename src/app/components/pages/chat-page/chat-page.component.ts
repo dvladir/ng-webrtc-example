@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RtcSessionConfigService} from '../../../sub-modules/p2p/services/rtc-session-config.service';
 import {RtcConnection, RtcSessionData} from '../../../sub-modules/p2p';
 import {NavigationService} from '../../../services/navigation.service';
@@ -9,7 +9,7 @@ import {RtcChatConnection} from './rtc-chat-connection';
   templateUrl: './chat-page.component.html',
   styleUrls: ['./chat-page.component.css']
 })
-export class ChatPageComponent implements OnInit {
+export class ChatPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private _nav: NavigationService,
@@ -32,6 +32,9 @@ export class ChatPageComponent implements OnInit {
 
   ngOnInit(): void {
     const sessionData: RtcSessionData = this._rtcSessionConfig.retrieveSessionData();
+    if (!sessionData) {
+      this._nav.users();
+    }
 
     const {p2p, waitTimeout} = sessionData;
     if (!p2p || !waitTimeout) {
