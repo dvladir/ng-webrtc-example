@@ -1,9 +1,13 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {Router} from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
+
+    const spyRoute = jasmine.createSpyObj('Router', ['initialNavigation']);
+
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -11,6 +15,12 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        {
+          provide: Router,
+          useValue: spyRoute
+        }
+      ]
     }).compileComponents();
   }));
 

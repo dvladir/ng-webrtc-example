@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurrentClientComponent } from './current-client.component';
+import {ClientNamePipe} from '../../pipes/client-name.pipe';
 
 describe('CurrentClientComponent', () => {
   let component: CurrentClientComponent;
@@ -8,7 +9,7 @@ describe('CurrentClientComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentClientComponent ]
+      declarations: [ CurrentClientComponent, ClientNamePipe ]
     })
     .compileComponents();
   }));

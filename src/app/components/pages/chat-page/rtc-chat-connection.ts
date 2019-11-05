@@ -21,14 +21,6 @@ export class RtcChatConnection extends RtcConnection {
     this._localActiveStream = this._remoteActiveStream = undefined;
   }
 
-  private getStreamForLocal(): Promise<MediaStream> {
-    return navigator.mediaDevices.getUserMedia({video: true});
-  }
-
-  private getStreamForRemote(): Promise<MediaStream> {
-    return navigator.mediaDevices.getUserMedia({video: true, audio: true});
-  }
-
   private handleGetUserMediaError(err: Error): void {
     switch (err.name) {
       case 'NotFoundError':
@@ -59,8 +51,16 @@ export class RtcChatConnection extends RtcConnection {
 
       this.cleanupActiveStream();
 
-      this._localActiveStream = await this.getStreamForLocal();
-      this._remoteActiveStream = await this.getStreamForRemote();
+      const remoteStream: MediaStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+      const localStream: MediaStream = remoteStream.clone();
+      const audioTracks: MediaStreamTrack[] = localStream.getAudioTracks();
+      audioTracks.forEach(t => {
+        localStream.removeTrack(t);
+        t.stop();
+      });
+
+      this._localActiveStream = localStream;
+      this._remoteActiveStream = remoteStream;
 
       const rtc: any = this.rtcPeerConnection;
 

@@ -48,7 +48,7 @@ export class NotificationLogicService implements OnDestroy {
           case SignalType.add:
             const hasDuplicate: boolean = !!acc.find(m => m.msgType === sig.message.msgType && m.text === sig.message.text);
             if (!hasDuplicate) {
-              acc.push(sig.message);
+              acc.unshift(sig.message);
             }
             break;
         }
