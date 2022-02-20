@@ -12,16 +12,6 @@ const app: e.Express = e();
 const server: http.Server = http.createServer(app);
 const appWs: ews.Instance = ews(app, server);
 
-//function returnIndex(res: e.Response): void {
-//  res.sendFile(path.join(__dirname, '../front/index.html'));
-//}
-
-// @ts-ignore
-//app.use('/', e.static(`${__dirname}/../front`));
-//app.get('/login', (req, res) => returnIndex(res));
-//app.get('/users', (req, res) => returnIndex(res));
-//app.get('/chat', (req, res) => returnIndex(res));
-
 function getClientName(c: Client): string {
   const {uid, name} = c;
   return !!name ? `${name} (${uid})` : uid;
