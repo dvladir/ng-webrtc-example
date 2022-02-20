@@ -8,6 +8,10 @@ export class RtcConfigurationService {
   constructor() {
   }
 
+  /**
+   * List of stun and turn servers, to avoid network restriction while working with two peers
+   * https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols
+   **/
   readonly serverList: RTCIceServer[] = [{
     urls: [
       'stun:stun.l.google.com:19302',

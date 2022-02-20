@@ -20,9 +20,17 @@ export class ChatPageComponent implements OnInit, OnDestroy {
 
   private _rtc: RtcConnection;
 
+  /**
+   * Video element to display stream from local camera
+   * @private
+   */
   @ViewChild('local', {static: true})
   private _local: ElementRef<HTMLVideoElement>;
 
+  /**
+   * Video element to display stream from remote camera
+   * @private
+   */
   @ViewChild('remote', {static: true})
   private _remote: ElementRef<HTMLVideoElement>;
 

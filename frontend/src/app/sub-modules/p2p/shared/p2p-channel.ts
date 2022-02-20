@@ -1,6 +1,9 @@
 import {Observable} from 'rxjs';
 import {P2PMessageContent} from './p2p-message';
 
+/**
+ * Is used to send messages between two peers through the websockets
+ **/
 export interface P2PChannel {
   readonly channelId: string; // equal to receiver client's id
   readonly isExternal: boolean; // True in case of channel is established by the receiver.

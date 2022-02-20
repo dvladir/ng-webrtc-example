@@ -9,6 +9,9 @@ import {P2PChannel} from '../shared/p2p-channel';
 import {P2PMessageType} from '../shared/p2p-message-type.enum';
 import {RtcSessionConfigService} from './rtc-session-config.service';
 
+/**
+ * Contains logic for dialog acceptation/rejection
+ */
 export abstract class BaseRtcDialogService implements P2PDialog {
 
   protected constructor(
@@ -42,6 +45,12 @@ export abstract class BaseRtcDialogService implements P2PDialog {
   }
 
 
+  /**
+   * Shows the confirmation dialog to accept/reject the communication
+   * Notify other peer about the decision
+   * @param channel
+   * @private
+   */
   private async proceedOffer(channel: P2PChannel): Promise<any> {
     if (this._isDialogOpened) {
       return undefined;
@@ -78,7 +87,12 @@ export abstract class BaseRtcDialogService implements P2PDialog {
     channel.send({messageType: P2PMessageType.accept, data: ''});
   }
 
-  private async createOffer(channel: P2PChannel): Promise<any> {
+  /**
+   * Await from other peer to proceed the communication
+   * @param channel
+   * @private
+   */
+  private async awaitOfferAcceptance(channel: P2PChannel): Promise<any> {
     if (this._isDialogOpened) {
       return;
     }
@@ -88,6 +102,7 @@ export abstract class BaseRtcDialogService implements P2PDialog {
       .pipe(takeUntil(channel.receive$))
       .subscribe(() => channel.stop(P2PStopReason.timeout));
 
+    // answers stream from other peer
     const receive$ = channel.receive$
       .pipe(
         filter((msg: P2PMessageContent) => msg.messageType === P2PMessageType.accept || msg.messageType === P2PMessageType.reject),
@@ -108,12 +123,15 @@ export abstract class BaseRtcDialogService implements P2PDialog {
     receive$
       .subscribe(messageType => {
         if (messageType === P2PMessageType.reject) {
+          // If other peer reject the offer, stop any communication
           channel.stop();
           return;
         } else if (messageType === P2PMessageType.accept) {
           if (isStopped) {
             this._messages.info(stopMsg);
           } else {
+            // In case of success, save the websocket channel's instance in the sessionConfig sercie
+            // and proceed the acceptation
             this._rtcSessionConfig.configSession({p2p: channel, waitTimeout: this._waitTimeout});
             this.continueOfferAcception();
           }
@@ -125,7 +143,7 @@ export abstract class BaseRtcDialogService implements P2PDialog {
     if (channel.isExternal) {
       this.proceedOffer(channel);
     } else {
-      this.createOffer(channel);
+      this.awaitOfferAcceptance(channel);
     }
   }
 

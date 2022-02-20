@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output, TrackByFunction} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {Client} from '../../shared/client';
 import {ClientStateService} from '../../services/client-state.service';
@@ -27,7 +27,7 @@ export class ClientsListComponent implements OnDestroy {
 
   private _terminator$: Subject<any> = new Subject<any>();
 
-  readonly trackByFn: (client: Client) => string = (client: Client) => ClientNamePipe.transform(client);
+  readonly trackByFn: TrackByFunction<Client> = (index: number, client: Client) => ClientNamePipe.transform(client);
 
   onRowClick(client: Client): void {
     if (!client.name) {

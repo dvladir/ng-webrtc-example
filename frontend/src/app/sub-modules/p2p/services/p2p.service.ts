@@ -10,6 +10,9 @@ import {P2PUtilsService} from './p2p-utils.service';
 import {ALL_P2P_DIALOGS, P2PDialogType} from '../shared/p2p-dialog-type';
 import {P2PDialogsMgmtService} from './p2p-dialogs-mgmt.service';
 
+/**
+ * Contains logic that relates to communication between to peers through the websockets
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +27,7 @@ export class P2PService {
 
     const initMsgTypes: P2PMessageType[] = [...ALL_P2P_DIALOGS, P2PMessageType.channelInit];
 
+    // Listen that other peer want to establish a websocket channel
     this._wss.on<P2PMessage>(EventTypes.p2pMessage)
       .pipe(
         filter(message => !!~initMsgTypes.indexOf(message.message.messageType)),
@@ -44,6 +48,7 @@ export class P2PService {
       .subscribe(msg => {
         const externalReceiver = msg.uidFrom;
         const dialogType: P2PDialogType = msg.message.messageType as P2PDialogType;
+        // Create channel and initiate the dialog
         this.createChannel(externalReceiver, true).then(channel => this._p2pDialogs.createDialog(dialogType, channel));
       });
   }
@@ -134,6 +139,11 @@ export class P2PService {
     return result;
   }
 
+  /**
+   * Create websocket channel between two peers and initiate the dialog
+   * @param dialogType
+   * @param receiverId
+   */
   async startP2PDialog(dialogType: P2PDialogType, receiverId: string): Promise<P2PChannel> {
     const channel: P2PChannel = await this.createChannel(receiverId, false);
     this._p2pDialogs.createDialog(dialogType, channel);
