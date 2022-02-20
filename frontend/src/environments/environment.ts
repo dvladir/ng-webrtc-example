@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // ws: 'ws://localhost:3000/endpoint'
-  ws: 'ws://localhost:8081/backend/endpoint'
+  ws: 'ws://localhost:3000/endpoint'
+  // ws: 'ws://localhost:8081/backend/endpoint'
 };
 
 /*
